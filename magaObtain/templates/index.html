@@ -1,0 +1,45 @@
+{% load static %}
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<title>リスト</title>
+</head>
+<body class="bg-light d-flex flex-column-reverse flex-sm-row">
+
+	<div class="d-flex flex-column p-3 text-white bg-dark" style="min-width: 180px;">
+	
+	<ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{% url 'index' %}" class="nav-link active" aria-current="page">
+          home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'list' %}" class="nav-link text-white">
+          list
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'search' %}" class="nav-link text-white">
+          search
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'logout' %}" class="nav-link text-white">
+          logout
+        </a>
+      </li>
+    </ul>
+	</div>
+	
+	<div class="container bg-white border" style="max-width:768px;min-height: 100vh;">
+		<h1>{{ content }}</h1>
+	</div>
+	
+</body>
+</html>

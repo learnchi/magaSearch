@@ -1,0 +1,80 @@
+{% load static %}
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<title>検索</title>
+</head>
+<body class="bg-light d-flex flex-column-reverse flex-sm-row">
+
+	<div class="d-flex flex-column p-3 text-white bg-dark" style="min-width: 180px;">
+	
+	<ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{% url 'index' %}" class="nav-link text-white" aria-current="page">
+          home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'list' %}" class="nav-link text-white">
+          list
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'search' %}" class="nav-link active">
+          search
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'logout' %}" class="nav-link text-white">
+          logout
+        </a>
+      </li>
+    </ul>
+	</div>
+	
+	<div class="container bg-white border" style="max-width:768px;min-height: 100vh;">
+		<form action="{% url 'search' %}" method="post">
+			{% csrf_token %}
+			<h1>検索</h1>
+    		<div class="row">
+                <label for="searchQuery" class="form-label col col-2">検索ワード</label>
+                <input type="text" class="form-control col" name="searchQuery" value="{{ data.searchQuery }}">
+    			<button type="submit" class="btn btn-primary col col-2">検索</button>
+    		</div>
+
+            <div class="list-group list-group-flush">
+            <div class="fs-6">
+              <div class="m-5">{{ data.list|length }}件見つかりました。</div>
+            </div>
+            
+    		{% for key, value in data.list.items %}
+            <div class="fs-4">
+              <div class="mb-1">{{ key }}</div>
+            </div>
+    			{% for article in value %}
+              <a name="article-ancher" href="{% url 'article' article.content_date.year article.content_date.month article.content_date.day %}" class="list-group-item list-group-item-action">
+              
+                <div class="d-flex w-100 justify-content-between">
+                  <div class="mb-1">{{ article.subject| safe }}</div>
+                  <small>{{ article.content_date }}</small>
+                </div>
+                <div class="w-100">
+                  <div class="alert alert-secondary" role="alert">{{ article.content| safe }}</div>
+                </div>
+              	
+              </a>
+    			{% endfor %}
+    		{% endfor %}
+            </div>
+        
+		</form>
+
+	</div>
+	
+</body>
+</html>

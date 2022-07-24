@@ -1,0 +1,80 @@
+{% load static %}
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<title>{{ data.subject }}</title>
+</head>
+<body class="bg-light d-flex flex-column-reverse flex-sm-row">
+
+	<div class="d-flex flex-column p-3 text-white bg-dark" style="min-width: 180px;">
+	
+	<ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{% url 'index' %}" class="nav-link text-white" aria-current="page">
+          home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'list' %}" class="nav-link text-white">
+          list
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'search' %}" class="nav-link text-white">
+          search
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'logout' %}" class="nav-link text-white">
+          logout
+        </a>
+      </li>
+    </ul>
+	</div>
+	
+	<div class="container bg-white border" style="max-width:768px;min-height: 100vh;">
+		<h1>{{ data.subject }}</h1>
+		{% for list in data.contents %}
+			{% if list.div %}
+				<div class="p-3">
+				{% if list.div == '★サポメ会員の勝間塾への新規入会(初月半額割引あり)はこちらから★' %}
+				
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                {{ list.div }}
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+		
+				{% else %}
+			    	{{ list.div }}
+			    {% endif %} 
+			    </div>
+			{% elif list.kadai %}
+				<div class="p-1 bg-light">
+			    <ul><li>{{ list.kadai }}</li></ul>
+			    </div>
+			{% elif list.a %}
+				<div class="ahref">
+			    	<a href="{{ list.a.href }}">{{ list.a.text }}</a>
+			    </div>
+			{% endif %} 
+		{% endfor %}
+		
+              </div><!-- accordion-body -->
+            </div><!-- collapseOne -->
+          </div><!-- accordion-item -->
+        </div><!-- accordionExample -->
+
+	</div><!-- container -->
+	
+</body>
+</html>
