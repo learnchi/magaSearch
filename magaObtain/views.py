@@ -10,10 +10,8 @@ from magaObtain.articleList import ArticleList
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from django.contrib.auth.decorators import login_required
 
 
-@login_required
 def index(request):
     url = f"https://katsumaweb.gio.filsp.jp/bn?ssid={settings.SSID}"
     response = requests.get(url)
@@ -26,7 +24,6 @@ def index(request):
     return render(request, 'index.html', {'content': content})
 
 
-@login_required
 def list(request):
     atcList = ArticleList()
     atcList.readAll()
@@ -36,7 +33,6 @@ def list(request):
     return render(request, 'list.html', {"title": title, "list": lst})
 
 
-@login_required
 def fetch(request):
     # 100記事分取得
     dt_now = datetime.now()
@@ -60,7 +56,6 @@ def fetch(request):
     return redirect(index)
 
 
-@login_required
 def current(request):
     atc = Article("", "", "")
     if atc.findByYMD():
@@ -77,7 +72,6 @@ def current(request):
     return render(request, 'article.html', {"data": {"subject": atc.getSubject(), "contents": rtnContents}})
 
 
-@login_required
 def article(request, year, month, day):
     atc = Article(year, month, day)
     if atc.findByYMD():
@@ -94,7 +88,6 @@ def article(request, year, month, day):
     return render(request, 'article.html', {"data": {"subject": atc.getSubject(), "contents": rtnContents}})
 
 
-@login_required
 def search(request):
     if request.POST.get('searchQuery'):
         searchQuery = request.POST.get('searchQuery')

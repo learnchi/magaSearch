@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'magaObtain.apps.MagaobtainConfig',
-    'accounts.apps.AccountsConfig',  # 認証
     'bootstrap5',
 ]
 
@@ -78,13 +77,9 @@ WSGI_APPLICATION = 'magaSearch.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'magasearch',
-        'USER': 'xxx',
-        'PASSWORD': 'xxx',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -125,11 +120,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-# ログイン、ログアウト時のリダイレクト先URL
-LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/maga/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # サポートメールのバックナンバーサイトにログインし、URLのhttps://katsumaweb.gio.filsp.jp/bn?ssid=以下を設定します
 SSID = 'xxxxxxxxxx'
